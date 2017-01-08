@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.lazypig.shopceo.dao.AdvertisementDao" >
+  <resultMap id="BaseResultMap" type="com.cn.lazypig.shopceo.domain.AdvertisementEntity" >
+    <id column="pId" property="pid" jdbcType="INTEGER" />
+    <result column="adId" property="adid" jdbcType="VARCHAR" />
+    <result column="adName" property="adname" jdbcType="VARCHAR" />
+    <result column="adUrl" property="adurl" jdbcType="VARCHAR" />
+    <result column="adDesc" property="addesc" jdbcType="VARCHAR" />
+    <result column="adTDUrl" property="adtdurl" jdbcType="VARCHAR" />
+    <result column="ownerId" property="ownerid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pId, adId, adName, adUrl, adDesc, adTDUrl, ownerId
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from advertisement
+    where pId = #{pid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAutoId" resultType="INTEGER">
+   SELECT Auto_increment FROM information_schema.tables  WHERE table_name='advertisement';
+  </select>
+  <select id="selectSelectiveList" resultMap="BaseResultMap" parameterType="com.cn.lazypig.shopceo.domain.AdvertisementEntity" >
+    select 
+    <include refid="Base_Column_List" />
+    from advertisement
+    where 1 = 1
+      <if test="pid != null" >
+        and pId = #{pid,jdbcType=INTEGER}
+      </if>
+      <if test="adid != null and adid != ''" >
+        and adId like CONCAT('%', #{adid,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="adname != null and adname != ''" >
+        and adName like CONCAT('%', #{adname,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="adurl != null and adurl != ''" >
+        and adUrl like CONCAT('%', #{adurl,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="addesc != null and addesc != ''" >
+        and adDesc like CONCAT('%', #{addesc,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="adtdurl != null and adtdurl != ''" >
+        and adTDUrl like CONCAT('%', #{adtdurl,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="ownerid != null and ownerid != ''" >
+        and ownerId like CONCAT('%', #{ownerid,jdbcType=VARCHAR}, '%')
+      </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from advertisement
+    where pId = #{pid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cn.lazypig.shopceo.domain.AdvertisementEntity" >
+    insert into advertisement (pId, adId, adName, 
+      adUrl, adDesc, adTDUrl, 
+      ownerId)
+    values (#{pid,jdbcType=INTEGER}, #{adid,jdbcType=VARCHAR}, #{adname,jdbcType=VARCHAR}, 
+      #{adurl,jdbcType=VARCHAR}, #{addesc,jdbcType=VARCHAR}, #{adtdurl,jdbcType=VARCHAR}, 
+      #{ownerid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.lazypig.shopceo.domain.AdvertisementEntity" >
+    insert into advertisement
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        pId,
+      </if>
+      <if test="adid != null" >
+        adId,
+      </if>
+      <if test="adname != null" >
+        adName,
+      </if>
+      <if test="adurl != null" >
+        adUrl,
+      </if>
+      <if test="addesc != null" >
+        adDesc,
+      </if>
+      <if test="adtdurl != null" >
+        adTDUrl,
+      </if>
+      <if test="ownerid != null" >
+        ownerId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="adid != null" >
+        #{adid,jdbcType=VARCHAR},
+      </if>
+      <if test="adname != null" >
+        #{adname,jdbcType=VARCHAR},
+      </if>
+      <if test="adurl != null" >
+        #{adurl,jdbcType=VARCHAR},
+      </if>
+      <if test="addesc != null" >
+        #{addesc,jdbcType=VARCHAR},
+      </if>
+      <if test="adtdurl != null" >
+        #{adtdurl,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerid != null" >
+        #{ownerid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.lazypig.shopceo.domain.AdvertisementEntity" >
+    update advertisement
+    <set >
+      <if test="adid != null" >
+        adId = #{adid,jdbcType=VARCHAR},
+      </if>
+      <if test="adname != null" >
+        adName = #{adname,jdbcType=VARCHAR},
+      </if>
+      <if test="adurl != null" >
+        adUrl = #{adurl,jdbcType=VARCHAR},
+      </if>
+      <if test="addesc != null" >
+        adDesc = #{addesc,jdbcType=VARCHAR},
+      </if>
+      <if test="adtdurl != null" >
+        adTDUrl = #{adtdurl,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerid != null" >
+        ownerId = #{ownerid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pId = #{pid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.lazypig.shopceo.domain.AdvertisementEntity" >
+    update advertisement
+    set adId = #{adid,jdbcType=VARCHAR},
+      adName = #{adname,jdbcType=VARCHAR},
+      adUrl = #{adurl,jdbcType=VARCHAR},
+      adDesc = #{addesc,jdbcType=VARCHAR},
+      adTDUrl = #{adtdurl,jdbcType=VARCHAR},
+      ownerId = #{ownerid,jdbcType=VARCHAR}
+    where pId = #{pid,jdbcType=INTEGER}
+  </update>
+</mapper>

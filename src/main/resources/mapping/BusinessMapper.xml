@@ -1,0 +1,591 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.lazypig.shopceo.dao.BusinessDao">
+	<resultMap id="BaseResultMap" type="com.cn.lazypig.shopceo.domain.Business">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="business_id" property="businessId" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="branch_name" property="branchName" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="telephone" property="telephone" jdbcType="VARCHAR" />
+		<result column="city" property="city" jdbcType="VARCHAR" />
+		<result column="regions" property="regions" jdbcType="VARCHAR" />
+		<result column="categories" property="categories" jdbcType="VARCHAR" />
+		<result column="latitude" property="latitude" jdbcType="REAL" />
+		<result column="longitude" property="longitude" jdbcType="REAL" />
+		<result column="avg_rating" property="avgRating" jdbcType="REAL" />
+		<result column="rating_img_url" property="ratingImgUrl"
+			jdbcType="VARCHAR" />
+		<result column="rating_s_img_url" property="ratingSImgUrl"
+			jdbcType="VARCHAR" />
+		<result column="product_grade" property="productGrade"
+			jdbcType="INTEGER" />
+		<result column="decoration_grade" property="decorationGrade"
+			jdbcType="INTEGER" />
+		<result column="service_grade" property="serviceGrade"
+			jdbcType="INTEGER" />
+		<result column="product_score" property="productScore"
+			jdbcType="REAL" />
+		<result column="decoration_score" property="decorationScore"
+			jdbcType="REAL" />
+		<result column="service_score" property="serviceScore"
+			jdbcType="REAL" />
+		<result column="avg_price" property="avgPrice" jdbcType="INTEGER" />
+		<result column="review_count" property="reviewCount" jdbcType="INTEGER" />
+		<result column="review_list_url" property="reviewListUrl"
+			jdbcType="VARCHAR" />
+		<result column="business_url" property="businessUrl" jdbcType="VARCHAR" />
+		<result column="photo_url" property="photoUrl" jdbcType="VARCHAR" />
+		<result column="s_photo_url" property="sPhotoUrl" jdbcType="VARCHAR" />
+		<result column="photo_count" property="photoCount" jdbcType="INTEGER" />
+		<result column="photo_list_url" property="photoListUrl"
+			jdbcType="VARCHAR" />
+		<result column="has_coupon" property="hasCoupon" jdbcType="INTEGER" />
+		<result column="coupon_id" property="couponId" jdbcType="INTEGER" />
+		<result column="coupon_description" property="couponDescription"
+			jdbcType="VARCHAR" />
+		<result column="coupon_url" property="couponUrl" jdbcType="VARCHAR" />
+		<result column="has_deal" property="hasDeal" jdbcType="INTEGER" />
+		<result column="deal_count" property="dealCount" jdbcType="INTEGER" />
+		<result column="deals" property="deals" jdbcType="VARCHAR" />
+		<result column="deals_id" property="dealsId" jdbcType="VARCHAR" />
+		<result column="deals_description" property="dealsDescription"
+			jdbcType="VARCHAR" />
+		<result column="deals_url" property="dealsUrl" jdbcType="VARCHAR" />
+		<result column="has_online_reservation" property="hasOnlineReservation"
+			jdbcType="INTEGER" />
+		<result column="online_reservation_url" property="onlineReservationUrl"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, business_id, name, branch_name, address, email, phone, telephone,
+		city, regions, categories,
+		latitude, longitude, avg_rating, rating_img_url, rating_s_img_url,
+		product_grade,
+		decoration_grade, service_grade, product_score, decoration_score, service_score,
+		avg_price, review_count, review_list_url, business_url, photo_url,
+		s_photo_url, photo_count,
+		photo_list_url, has_coupon, coupon_id, coupon_description, coupon_url, has_deal,
+		deal_count, deals, deals_id, deals_description, deals_url,
+		has_online_reservation,
+		online_reservation_url
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from business
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<select id="selectSelectiveList" resultMap="BaseResultMap"
+		parameterType="com.cn.lazypig.shopceo.domain.Business">
+		select
+		<include refid="Base_Column_List" />
+		from business
+		where 1 = 1
+		<if test="id != null">
+			and id = #{id,jdbcType=INTEGER}
+		</if>
+		<if test="businessId != null and businessId != ''">
+			and business_id = #{businessId,jdbcType=VARCHAR}
+		</if>
+		<if test="name != null and name != ''">
+			and name like CONCAT('%', #{name,jdbcType=VARCHAR}, '%')
+		</if>
+		<if test="branchName != null and branchName != ''">
+			and branch_name like CONCAT('%', #{branchName,jdbcType=VARCHAR}, '%')
+		</if>
+		<if test="address != null and address != ''">
+			and address like CONCAT('%', #{address,jdbcType=VARCHAR}, '%')
+		</if>
+		<if test="city != null and city != ''">
+			and city like CONCAT('%', #{city,jdbcType=VARCHAR}, '%')
+		</if>
+		<if test="email != null and email != ''">
+			and email like CONCAT('%', #{email,jdbcType=VARCHAR}, '%')
+		</if>
+		<if test="phone != null and phone != ''">
+			and phone like CONCAT('%', #{phone,jdbcType=VARCHAR}, '%')
+		</if>
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from business
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.cn.lazypig.shopceo.domain.Business">
+		insert into business (id, business_id, name,
+		branch_name, address, email, phone, telephone,
+		city, regions, categories,
+		latitude, longitude, avg_rating,
+		rating_img_url, rating_s_img_url, product_grade,
+		decoration_grade, service_grade, product_score,
+		decoration_score, service_score, avg_price,
+		review_count, review_list_url, business_url,
+		photo_url, s_photo_url, photo_count,
+		photo_list_url, has_coupon, coupon_id,
+		coupon_description, coupon_url, has_deal,
+		deal_count, deals, deals_id,
+		deals_description, deals_url, has_online_reservation,
+		online_reservation_url)
+		values (#{id,jdbcType=INTEGER}, #{businessId,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR},
+		#{branchName,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+		#{phone,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR},
+		#{city,jdbcType=VARCHAR}, #{regions,jdbcType=VARCHAR},
+		#{categories,jdbcType=VARCHAR},
+		#{latitude,jdbcType=REAL}, #{longitude,jdbcType=REAL}, #{avgRating,jdbcType=REAL},
+		#{ratingImgUrl,jdbcType=VARCHAR}, #{ratingSImgUrl,jdbcType=VARCHAR},
+		#{productGrade,jdbcType=INTEGER},
+		#{decorationGrade,jdbcType=INTEGER}, #{serviceGrade,jdbcType=INTEGER}, #{productScore,jdbcType=REAL},
+		#{decorationScore,jdbcType=REAL}, #{serviceScore,jdbcType=REAL},
+		#{avgPrice,jdbcType=INTEGER},
+		#{reviewCount,jdbcType=INTEGER}, #{reviewListUrl,jdbcType=VARCHAR}, #{businessUrl,jdbcType=VARCHAR},
+		#{photoUrl,jdbcType=VARCHAR}, #{sPhotoUrl,jdbcType=VARCHAR},
+		#{photoCount,jdbcType=INTEGER},
+		#{photoListUrl,jdbcType=VARCHAR}, #{hasCoupon,jdbcType=INTEGER}, #{couponId,jdbcType=INTEGER},
+		#{couponDescription,jdbcType=VARCHAR}, #{couponUrl,jdbcType=VARCHAR},
+		#{hasDeal,jdbcType=INTEGER},
+		#{dealCount,jdbcType=INTEGER}, #{deals,jdbcType=VARCHAR}, #{dealsId,jdbcType=VARCHAR},
+		#{dealsDescription,jdbcType=VARCHAR}, #{dealsUrl,jdbcType=VARCHAR},
+		#{hasOnlineReservation,jdbcType=INTEGER},
+		#{onlineReservationUrl,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.cn.lazypig.shopceo.domain.Business">
+		insert into business
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="businessId != null">
+				business_id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="branchName != null">
+				branch_name,
+			</if>
+			<if test="address != null">
+				address,
+			</if>
+			<if test="email != null">
+				email,
+			</if>
+			<if test="phone != null">
+				phone,
+			</if>
+			<if test="telephone != null">
+				telephone,
+			</if>
+			<if test="city != null">
+				city,
+			</if>
+			<if test="regions != null">
+				regions,
+			</if>
+			<if test="categories != null">
+				categories,
+			</if>
+			<if test="latitude != null">
+				latitude,
+			</if>
+			<if test="longitude != null">
+				longitude,
+			</if>
+			<if test="avgRating != null">
+				avg_rating,
+			</if>
+			<if test="ratingImgUrl != null">
+				rating_img_url,
+			</if>
+			<if test="ratingSImgUrl != null">
+				rating_s_img_url,
+			</if>
+			<if test="productGrade != null">
+				product_grade,
+			</if>
+			<if test="decorationGrade != null">
+				decoration_grade,
+			</if>
+			<if test="serviceGrade != null">
+				service_grade,
+			</if>
+			<if test="productScore != null">
+				product_score,
+			</if>
+			<if test="decorationScore != null">
+				decoration_score,
+			</if>
+			<if test="serviceScore != null">
+				service_score,
+			</if>
+			<if test="avgPrice != null">
+				avg_price,
+			</if>
+			<if test="reviewCount != null">
+				review_count,
+			</if>
+			<if test="reviewListUrl != null">
+				review_list_url,
+			</if>
+			<if test="businessUrl != null">
+				business_url,
+			</if>
+			<if test="photoUrl != null">
+				photo_url,
+			</if>
+			<if test="sPhotoUrl != null">
+				s_photo_url,
+			</if>
+			<if test="photoCount != null">
+				photo_count,
+			</if>
+			<if test="photoListUrl != null">
+				photo_list_url,
+			</if>
+			<if test="hasCoupon != null">
+				has_coupon,
+			</if>
+			<if test="couponId != null">
+				coupon_id,
+			</if>
+			<if test="couponDescription != null">
+				coupon_description,
+			</if>
+			<if test="couponUrl != null">
+				coupon_url,
+			</if>
+			<if test="hasDeal != null">
+				has_deal,
+			</if>
+			<if test="dealCount != null">
+				deal_count,
+			</if>
+			<if test="deals != null">
+				deals,
+			</if>
+			<if test="dealsId != null">
+				deals_id,
+			</if>
+			<if test="dealsDescription != null">
+				deals_description,
+			</if>
+			<if test="dealsUrl != null">
+				deals_url,
+			</if>
+			<if test="hasOnlineReservation != null">
+				has_online_reservation,
+			</if>
+			<if test="onlineReservationUrl != null">
+				online_reservation_url,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="businessId != null">
+				#{businessId,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="branchName != null">
+				#{branchName,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				#{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="telephone != null">
+				#{telephone,jdbcType=VARCHAR},
+			</if>
+			<if test="city != null">
+				#{city,jdbcType=VARCHAR},
+			</if>
+			<if test="regions != null">
+				#{regions,jdbcType=VARCHAR},
+			</if>
+			<if test="categories != null">
+				#{categories,jdbcType=VARCHAR},
+			</if>
+			<if test="latitude != null">
+				#{latitude,jdbcType=REAL},
+			</if>
+			<if test="longitude != null">
+				#{longitude,jdbcType=REAL},
+			</if>
+			<if test="avgRating != null">
+				#{avgRating,jdbcType=REAL},
+			</if>
+			<if test="ratingImgUrl != null">
+				#{ratingImgUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="ratingSImgUrl != null">
+				#{ratingSImgUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="productGrade != null">
+				#{productGrade,jdbcType=INTEGER},
+			</if>
+			<if test="decorationGrade != null">
+				#{decorationGrade,jdbcType=INTEGER},
+			</if>
+			<if test="serviceGrade != null">
+				#{serviceGrade,jdbcType=INTEGER},
+			</if>
+			<if test="productScore != null">
+				#{productScore,jdbcType=REAL},
+			</if>
+			<if test="decorationScore != null">
+				#{decorationScore,jdbcType=REAL},
+			</if>
+			<if test="serviceScore != null">
+				#{serviceScore,jdbcType=REAL},
+			</if>
+			<if test="avgPrice != null">
+				#{avgPrice,jdbcType=INTEGER},
+			</if>
+			<if test="reviewCount != null">
+				#{reviewCount,jdbcType=INTEGER},
+			</if>
+			<if test="reviewListUrl != null">
+				#{reviewListUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="businessUrl != null">
+				#{businessUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="photoUrl != null">
+				#{photoUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="sPhotoUrl != null">
+				#{sPhotoUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="photoCount != null">
+				#{photoCount,jdbcType=INTEGER},
+			</if>
+			<if test="photoListUrl != null">
+				#{photoListUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="hasCoupon != null">
+				#{hasCoupon,jdbcType=INTEGER},
+			</if>
+			<if test="couponId != null">
+				#{couponId,jdbcType=INTEGER},
+			</if>
+			<if test="couponDescription != null">
+				#{couponDescription,jdbcType=VARCHAR},
+			</if>
+			<if test="couponUrl != null">
+				#{couponUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="hasDeal != null">
+				#{hasDeal,jdbcType=INTEGER},
+			</if>
+			<if test="dealCount != null">
+				#{dealCount,jdbcType=INTEGER},
+			</if>
+			<if test="deals != null">
+				#{deals,jdbcType=VARCHAR},
+			</if>
+			<if test="dealsId != null">
+				#{dealsId,jdbcType=VARCHAR},
+			</if>
+			<if test="dealsDescription != null">
+				#{dealsDescription,jdbcType=VARCHAR},
+			</if>
+			<if test="dealsUrl != null">
+				#{dealsUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="hasOnlineReservation != null">
+				#{hasOnlineReservation,jdbcType=INTEGER},
+			</if>
+			<if test="onlineReservationUrl != null">
+				#{onlineReservationUrl,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.cn.lazypig.shopceo.domain.Business">
+		update business
+		<set>
+			<if test="businessId != null">
+				business_id = #{businessId,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="branchName != null">
+				branch_name = #{branchName,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				address = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				email = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				phone = #{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="telephone != null">
+				telephone = #{telephone,jdbcType=VARCHAR},
+			</if>
+			<if test="city != null">
+				city = #{city,jdbcType=VARCHAR},
+			</if>
+			<if test="regions != null">
+				regions = #{regions,jdbcType=VARCHAR},
+			</if>
+			<if test="categories != null">
+				categories = #{categories,jdbcType=VARCHAR},
+			</if>
+			<if test="latitude != null">
+				latitude = #{latitude,jdbcType=REAL},
+			</if>
+			<if test="longitude != null">
+				longitude = #{longitude,jdbcType=REAL},
+			</if>
+			<if test="avgRating != null">
+				avg_rating = #{avgRating,jdbcType=REAL},
+			</if>
+			<if test="ratingImgUrl != null">
+				rating_img_url = #{ratingImgUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="ratingSImgUrl != null">
+				rating_s_img_url = #{ratingSImgUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="productGrade != null">
+				product_grade = #{productGrade,jdbcType=INTEGER},
+			</if>
+			<if test="decorationGrade != null">
+				decoration_grade = #{decorationGrade,jdbcType=INTEGER},
+			</if>
+			<if test="serviceGrade != null">
+				service_grade = #{serviceGrade,jdbcType=INTEGER},
+			</if>
+			<if test="productScore != null">
+				product_score = #{productScore,jdbcType=REAL},
+			</if>
+			<if test="decorationScore != null">
+				decoration_score = #{decorationScore,jdbcType=REAL},
+			</if>
+			<if test="serviceScore != null">
+				service_score = #{serviceScore,jdbcType=REAL},
+			</if>
+			<if test="avgPrice != null">
+				avg_price = #{avgPrice,jdbcType=INTEGER},
+			</if>
+			<if test="reviewCount != null">
+				review_count = #{reviewCount,jdbcType=INTEGER},
+			</if>
+			<if test="reviewListUrl != null">
+				review_list_url = #{reviewListUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="businessUrl != null">
+				business_url = #{businessUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="photoUrl != null">
+				photo_url = #{photoUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="sPhotoUrl != null">
+				s_photo_url = #{sPhotoUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="photoCount != null">
+				photo_count = #{photoCount,jdbcType=INTEGER},
+			</if>
+			<if test="photoListUrl != null">
+				photo_list_url = #{photoListUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="hasCoupon != null">
+				has_coupon = #{hasCoupon,jdbcType=INTEGER},
+			</if>
+			<if test="couponId != null">
+				coupon_id = #{couponId,jdbcType=INTEGER},
+			</if>
+			<if test="couponDescription != null">
+				coupon_description = #{couponDescription,jdbcType=VARCHAR},
+			</if>
+			<if test="couponUrl != null">
+				coupon_url = #{couponUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="hasDeal != null">
+				has_deal = #{hasDeal,jdbcType=INTEGER},
+			</if>
+			<if test="dealCount != null">
+				deal_count = #{dealCount,jdbcType=INTEGER},
+			</if>
+			<if test="deals != null">
+				deals = #{deals,jdbcType=VARCHAR},
+			</if>
+			<if test="dealsId != null">
+				deals_id = #{dealsId,jdbcType=VARCHAR},
+			</if>
+			<if test="dealsDescription != null">
+				deals_description = #{dealsDescription,jdbcType=VARCHAR},
+			</if>
+			<if test="dealsUrl != null">
+				deals_url = #{dealsUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="hasOnlineReservation != null">
+				has_online_reservation = #{hasOnlineReservation,jdbcType=INTEGER},
+			</if>
+			<if test="onlineReservationUrl != null">
+				online_reservation_url = #{onlineReservationUrl,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.cn.lazypig.shopceo.domain.Business">
+		update business
+		set business_id = #{businessId,jdbcType=VARCHAR},
+		name = #{name,jdbcType=VARCHAR},
+		branch_name = #{branchName,jdbcType=VARCHAR},
+		address = #{address,jdbcType=VARCHAR},
+		email = #{email,jdbcType=VARCHAR},
+		phone = #{phone,jdbcType=VARCHAR},
+		telephone = #{telephone,jdbcType=VARCHAR},
+		city = #{city,jdbcType=VARCHAR},
+		regions = #{regions,jdbcType=VARCHAR},
+		categories = #{categories,jdbcType=VARCHAR},
+		latitude = #{latitude,jdbcType=REAL},
+		longitude = #{longitude,jdbcType=REAL},
+		avg_rating = #{avgRating,jdbcType=REAL},
+		rating_img_url = #{ratingImgUrl,jdbcType=VARCHAR},
+		rating_s_img_url = #{ratingSImgUrl,jdbcType=VARCHAR},
+		product_grade = #{productGrade,jdbcType=INTEGER},
+		decoration_grade = #{decorationGrade,jdbcType=INTEGER},
+		service_grade = #{serviceGrade,jdbcType=INTEGER},
+		product_score = #{productScore,jdbcType=REAL},
+		decoration_score = #{decorationScore,jdbcType=REAL},
+		service_score = #{serviceScore,jdbcType=REAL},
+		avg_price = #{avgPrice,jdbcType=INTEGER},
+		review_count = #{reviewCount,jdbcType=INTEGER},
+		review_list_url = #{reviewListUrl,jdbcType=VARCHAR},
+		business_url = #{businessUrl,jdbcType=VARCHAR},
+		photo_url = #{photoUrl,jdbcType=VARCHAR},
+		s_photo_url = #{sPhotoUrl,jdbcType=VARCHAR},
+		photo_count = #{photoCount,jdbcType=INTEGER},
+		photo_list_url = #{photoListUrl,jdbcType=VARCHAR},
+		has_coupon = #{hasCoupon,jdbcType=INTEGER},
+		coupon_id = #{couponId,jdbcType=INTEGER},
+		coupon_description = #{couponDescription,jdbcType=VARCHAR},
+		coupon_url = #{couponUrl,jdbcType=VARCHAR},
+		has_deal = #{hasDeal,jdbcType=INTEGER},
+		deal_count = #{dealCount,jdbcType=INTEGER},
+		deals = #{deals,jdbcType=VARCHAR},
+		deals_id = #{dealsId,jdbcType=VARCHAR},
+		deals_description = #{dealsDescription,jdbcType=VARCHAR},
+		deals_url = #{dealsUrl,jdbcType=VARCHAR},
+		has_online_reservation = #{hasOnlineReservation,jdbcType=INTEGER},
+		online_reservation_url = #{onlineReservationUrl,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>
