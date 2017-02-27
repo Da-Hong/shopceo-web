@@ -83,4 +83,18 @@ public class BusinessLogin {
 	public void setModifytime(Date modifytime) {
 		this.modifytime = modifytime;
 	}
+
+	@Override
+	public String toString() {
+		return "BusinessLogin{" +
+				"pid=" + pid +
+				", remember=" + remember +
+				", businessid='" + businessid + '\'' +
+				", email='" + email + '\'' +
+				", phone='" + phone + '\'' +
+				", password='" + password + '\'' +
+				", createtime=" + createtime +
+				", modifytime=" + modifytime +
+				'}';
+	}
 }

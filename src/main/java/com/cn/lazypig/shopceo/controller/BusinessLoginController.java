@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,8 @@ import com.cn.lazypig.shopceo.service.BusinessLoginService;
 @Controller
 @RequestMapping("/")
 public class BusinessLoginController {
+
+	private static Logger logger = Logger.getLogger(BusinessLoginController.class);
 
 	@Resource
 	private BusinessLoginService loginService;
@@ -47,6 +50,7 @@ public class BusinessLoginController {
 	@RequestMapping("/doLogin")
 	@ResponseBody
 	public boolean doLogin(BusinessLogin user, HttpServletRequest request, HttpServletResponse response, Model model) {
+		logger.info("XXXXXXXXXXXXXXXXXXX-" + user.toString());
 		HttpSession session = request.getSession();
 		if (user.getRemember()) {
 			response.addCookie(new Cookie("shopceo_phone", user.getPhone()));
